@@ -6,7 +6,9 @@ This script describes common procedures.
 
 ```bash
 cd <package-name>
-pnpm version patch
+new_version=$(pnpm version minor)
+git add .
+git commit -m "$new_version"
 git push && git push --tags
 pnpm publish --access public
 ```
