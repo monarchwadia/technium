@@ -6,7 +6,7 @@ This script describes common procedures.
 
 ```bash
 cd <package-name>
-new_version=$(pnpm version minor)
+new_version=$(pnpm version patch)
 git add .
 git commit -m "$new_version"
 git push && git push --tags
