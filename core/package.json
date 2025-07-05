@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "publish": "git commit -am '$(npm version patch)' && npm publish --access public"
+    "publish": "git commit -am $(npm version patch) && npm publish --access public"
   },
   "keywords": [],
   "author": "",
