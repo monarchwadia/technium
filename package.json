@@ -1,0 +1,14 @@
+{
+  "name": "@technium/root",
+  "description": "Tooling for LLMs.",
+  "version": "1.0.0",
+  "main": "index.js",
+  "private": true,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "packageManager": "pnpm@10.10.0"
+}

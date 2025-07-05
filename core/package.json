@@ -1,0 +1,13 @@
+{
+  "name": "@technium/gardener",
+  "version": "0.0.1",
+  "description": "A static site generator that works well with LLMs. Opinionated and built for knowledge gardens.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.10.0"
+}

@@ -1,0 +1,4 @@
+body { font-family: sans-serif; background: #f9f9f9; color: #222; }
+.wikiname { color: #0074d9; text-decoration: underline; }
+.wikiname-missing { color: #d90429; text-decoration: underline wavy red; }
+section { background: #fff; border-radius: 8px; padding: 2em; margin: 2em auto; max-width: 700px; box-shadow: 0 2px 8px #0001; }
