@@ -12,7 +12,11 @@
   "license": "ISC",
   "packageManager": "pnpm@10.10.0",
   "dependencies": {
+    "@mermaid-js/mermaid-cli": "^11.6.0",
     "@technium/gardener": "workspace:^",
     "tsx": "^4.20.3"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.10"
   }
 }

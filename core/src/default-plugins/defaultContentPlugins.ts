@@ -139,10 +139,38 @@ export const processMarkdown = (
         // Write Mermaid SVGs using npx mmdc
         const mermaidDir = path.join(outputDir, "generated", "mermaid");
         fs.mkdirSync(mermaidDir, { recursive: true });
+        
+        // Check if Chrome/Chromium is available
+        let chromeExecutable = null;
+        const possibleChromePaths = [
+          'google-chrome',
+          'chromium-browser', 
+          'chromium',
+          '/usr/bin/google-chrome',
+          '/usr/bin/chromium-browser',
+          '/usr/bin/chromium',
+          '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
+          '/Applications/Chromium.app/Contents/MacOS/Chromium'
+        ];
+        
+        for (const chromePath of possibleChromePaths) {
+          try {
+            execSync(`which ${chromePath}`, { stdio: 'ignore' });
+            chromeExecutable = chromePath;
+            break;
+          } catch {
+            // Try next path
+          }
+        }
+        
         // Write puppeteer-config.json to a temp dir
         const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), "gardener-mmdc-"));
         const puppeteerConfigPath = path.join(tmpDir, "puppeteer-config.json");
-        fs.writeFileSync(puppeteerConfigPath, JSON.stringify({ args: ["--no-sandbox"] }), "utf-8");
+        const puppeteerConfig = { 
+          args: ["--no-sandbox", "--disable-setuid-sandbox"],
+          ...(chromeExecutable && { executablePath: chromeExecutable })
+        };
+        fs.writeFileSync(puppeteerConfigPath, JSON.stringify(puppeteerConfig), "utf-8");
         for (const [img, code] of Object.entries(mermaidDiagrams)) {
           const mmdPath = path.join(mermaidDir, img.replace(/\.svg$/, ".mmd"));
           const svgPath = path.join(mermaidDir, img);
@@ -153,6 +181,15 @@ export const processMarkdown = (
             fs.rmSync(mmdPath);
           } catch (e) {
             console.error(`Failed to render Mermaid diagram ${img} with mmdc:`, e);
+            if (!chromeExecutable) {
+              console.error(`
+Chrome/Chromium not found. To fix this:
+- Ubuntu/Debian: sudo apt install chromium-browser
+- CentOS/RHEL: sudo yum install chromium
+- macOS: brew install chromium
+- Or install Google Chrome manually
+              `);
+            }
           }
         }
       }
