@@ -1,11 +1,11 @@
 {
   "name": "@technium/gardener",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "A static site generator that works well with LLMs. Opinionated and built for knowledge gardens.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "publish": "npm version patch && npm publish --access public"
+    "publish": "git commit -m '$(npm version patch)' && npm publish --access public"
   },
   "keywords": [],
   "author": "",
