@@ -1,6 +1,6 @@
 {
   "name": "@technium/gardener",
-  "version": "0.0.7",
+  "version": "0.1.0",
   "description": "A static site generator that works well with LLMs. Opinionated and built for knowledge gardens.",
   "main": "index.js",
   "scripts": {
