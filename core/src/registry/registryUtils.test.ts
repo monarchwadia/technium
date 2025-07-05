@@ -10,16 +10,18 @@ describe('registryUtils', () => {
       path: '/root',
       dirPath: '/',
       isDirectory: true,
+      relPath: 'root',
       children: [
-        { file: { name: 'a', path: '/root/a', dirPath: '/root', isDirectory: false } },
+        { file: { name: 'a', path: '/root/a', dirPath: '/root', isDirectory: false, relPath: 'a' } },
         {
           file: {
             name: 'b',
             path: '/root/b',
             dirPath: '/root',
             isDirectory: true,
+            relPath: 'b',
             children: [
-              { file: { name: 'c', path: '/root/b/c', dirPath: '/root/b', isDirectory: false } }
+              { file: { name: 'c', path: '/root/b/c', dirPath: '/root/b', isDirectory: false, relPath: 'b/c' } }
             ]
           }
         }
@@ -60,7 +62,7 @@ describe('registryUtils', () => {
 
   it('visitRegistry visits both content and asset trees asynchronously', async () => {
     const tree1 = makeTree();
-    const tree2: RegistryNode = { file: { name: 'X', path: '/X', dirPath: '/', isDirectory: false } };
+    const tree2: RegistryNode = { file: { name: 'X', path: '/X', dirPath: '/', isDirectory: false, relPath: 'X'} };
     const registry = { content: tree1, assets: tree2 };
     const visited: string[] = [];
     await visitRegistry(registry, (node) => { visited.push(node.file.name); });

@@ -2,18 +2,23 @@ import fs from "fs";
 import path from "path";
 import { RegistryNode } from "./registry.types";
 
+interface RegistryInitializerConstructorParams {
+    contentDir: string;
+    assetsDir: string;
+}
+
 /**
  * This file parses all contents and assets in the source directory and generates a registry of all files.
  */
 export class RegistryInitializer {
     private registry: { content: RegistryNode; assets: RegistryNode } | null = null;
+    private config: RegistryInitializerConstructorParams;
 
     constructor(
-        private config: {
-            contentDir: string;
-            assetsDir: string;
-        }
-    ) {}
+        config: RegistryInitializerConstructorParams
+    ) {
+        this.config = config;
+    }
 
     /**
      * walks through the content and assets directories and collects all the files, getting easily-available metadata
