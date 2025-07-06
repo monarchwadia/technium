@@ -1,5 +1,5 @@
 {
-  "name": "@technium/gardener",
+  "name": "@technium/gardener-core",
   "version": "0.1.1",
   "description": "The core of the Gardener static site generator.",
   "main": "dist/exports.js",

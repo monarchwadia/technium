@@ -91,6 +91,18 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
 
+  plugins/plugin-copy:
+    devDependencies:
+      '@types/node':
+        specifier: ^24.0.10
+        version: 24.0.10
+      typescript:
+        specifier: 5.8.3
+        version: 5.8.3
+      vitest:
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@24.0.10)(jiti@1.21.7)(tsx@4.20.3)(yaml@2.8.0)
+
 packages:
 
   '@alloc/quick-lru@5.2.0':

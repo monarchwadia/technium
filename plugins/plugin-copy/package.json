@@ -1,0 +1,18 @@
+{
+  "name": "@technium/gardener-plugin-copy",
+  "version": "0.1.0",
+  "description": "Copies",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.10.0",
+  "devDependencies": {
+    "@types/node": "^24.0.10",
+    "typescript": "5.8.3",
+    "vitest": "^3.2.4"
+  }
+}

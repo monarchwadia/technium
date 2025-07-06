@@ -1,0 +1,19 @@
+{
+  "name": "@technium/gardener-plugin-libutils",
+  "version": "0.0.1",
+  "description": "Utilities for building Gardener plugins.",
+  "main": "dist/exports.js",
+  "scripts": {
+    "build": "tsc --project tsconfig.json"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.10.0",
+  "devDependencies": {
+    "@types/node": "^24.0.10",
+    "typescript": "5.8.3",
+    "vitest": "^3.2.4",
+    "@gardener/core": "workspace:*"
+  }
+}

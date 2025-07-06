@@ -1,7 +1,7 @@
 {
   "name": "@technium/root",
   "description": "Tooling for LLMs.",
-  "version": "1.0.0",
+  "version": "0.0.0",
   "main": "index.js",
   "private": true,
   "scripts": {
