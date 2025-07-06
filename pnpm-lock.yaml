@@ -77,7 +77,7 @@ importers:
       '@mermaid-js/mermaid-cli':
         specifier: ^11.6.0
         version: 11.6.0(puppeteer@23.11.1(typescript@5.8.3))
-      '@technium/gardener':
+      '@technium/gardener-core':
         specifier: workspace:*
         version: link:../../../core
       tsx:
@@ -93,6 +93,21 @@ importers:
 
   plugins/plugin-copy:
     devDependencies:
+      '@types/node':
+        specifier: ^24.0.10
+        version: 24.0.10
+      typescript:
+        specifier: 5.8.3
+        version: 5.8.3
+      vitest:
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@24.0.10)(jiti@1.21.7)(tsx@4.20.3)(yaml@2.8.0)
+
+  plugins/plugin-libutils:
+    devDependencies:
+      '@technium/gardener-core':
+        specifier: workspace:*
+        version: link:../../core
       '@types/node':
         specifier: ^24.0.10
         version: 24.0.10

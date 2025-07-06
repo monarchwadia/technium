@@ -1,5 +1,5 @@
 import path from "path";
-import { Gardener } from "@technium/gardener";
+import { Gardener } from "@technium/gardener-core";
 
 const main = async () => {
     const gardener = new Gardener({
