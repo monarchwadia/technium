@@ -1,16 +1,16 @@
-import type { GardenerPlugin } from "./PluginManager.types";
+import type { GardenerPluginHoc, GardenerPluginInstance } from "./PluginManager.types";
 
 /**
  * Composes a tuple of AsyncFn into a pipeline, inferring input of first and output of last.
  */
 export function composePlugins<
-  Fns extends [GardenerPlugin<any, any>, ...GardenerPlugin<any, any>[]]
+  Fns extends [GardenerPluginInstance<any, any>, ...GardenerPluginInstance<any, any>[]]
 >(
   ...fns: Fns
-): GardenerPlugin<
+): GardenerPluginInstance<
   Parameters<Fns[0]>[0],
   // Infer return type of last function
-  Fns extends [...any, GardenerPlugin<any, infer R>] ? R : never
+  Fns extends [...any, GardenerPluginInstance<any, infer R>] ? R : never
 > {
   return async (input) => {
     let result: any = input;

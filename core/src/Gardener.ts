@@ -25,8 +25,10 @@ export class Gardener {
 
         const assetManager = new GardenerPluginManager(
             defaultAssetPlugins(
-                this.config.src.assetsDir,
-                this.config.dist
+                {
+                    assetsDir: this.config.src.assetsDir,
+                    destDir: this.config.dist
+                }
             )
         )
         
@@ -34,8 +36,10 @@ export class Gardener {
 
         const contentManager = new GardenerPluginManager(
             defaultContentPlugins(
-                this.config.src.contentDir,
-                this.config.dist
+                {
+                    contentDir: this.config.src.contentDir,
+                    outputDir: this.config.dist
+                }
             )
         );
         await contentManager.process(registry.content);

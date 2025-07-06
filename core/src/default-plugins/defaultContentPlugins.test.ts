@@ -31,7 +31,7 @@ describe("defaultContentPlugins with PluginManager", () => {
     const initializer = new RegistryInitializer({ contentDir, assetsDir: contentDir });
     await initializer.initializeRegistry();
     const registry = initializer.getRegistry();
-    const manager = new GardenerPluginManager(processMarkdown(contentDir, outputDir));
+    const manager = new GardenerPluginManager(processMarkdown({contentDir, outputDir}));
     await manager.process(registry.content);
     const htmlPath = path.join(outputDir, "markdown-test.html");
     expect(fs.existsSync(htmlPath)).toBe(true);
@@ -43,7 +43,7 @@ describe("defaultContentPlugins with PluginManager", () => {
     const initializer = new RegistryInitializer({ contentDir, assetsDir: contentDir });
     await initializer.initializeRegistry();
     const registry = initializer.getRegistry();
-    const manager = new GardenerPluginManager(processHtml(contentDir, outputDir));
+    const manager = new GardenerPluginManager(processHtml({contentDir, outputDir}));
     await manager.process(registry.content);
     const htmlPath = path.join(outputDir, "html-test.html");
     expect(fs.existsSync(htmlPath)).toBe(true);
@@ -55,7 +55,7 @@ describe("defaultContentPlugins with PluginManager", () => {
     const initializer = new RegistryInitializer({ contentDir, assetsDir: contentDir });
     await initializer.initializeRegistry();
     const registry = initializer.getRegistry();
-    const manager = new GardenerPluginManager(processDirectories(contentDir, outputDir));
+    const manager = new GardenerPluginManager(processDirectories({contentDir, outputDir}));
     await manager.process(registry.content);
     const dirPath = path.join(outputDir, "subdir");
     expect(fs.existsSync(dirPath)).toBe(true);
@@ -66,7 +66,7 @@ describe("defaultContentPlugins with PluginManager", () => {
     const initializer = new RegistryInitializer({ contentDir, assetsDir: contentDir });
     await initializer.initializeRegistry();
     const registry = initializer.getRegistry();
-    const manager = new GardenerPluginManager(defaultContentPlugins(contentDir, outputDir));
+    const manager = new GardenerPluginManager(defaultContentPlugins({contentDir, outputDir}));
     await manager.process(registry.content);
     expect(fs.existsSync(path.join(outputDir, "markdown-test.html"))).toBe(true);
     expect(fs.existsSync(path.join(outputDir, "html-test.html"))).toBe(true);

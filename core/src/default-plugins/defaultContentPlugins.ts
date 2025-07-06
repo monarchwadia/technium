@@ -2,7 +2,7 @@ import fs from "fs";
 import path from "path";
 import { visitNode } from "../registry/registryUtils";
 import type { RegistryNode } from "../registry/registry.types";
-import type { GardenerPlugin } from "../plugin-manager/PluginManager.types";
+import type { GardenerPluginHoc, GardenerPluginInstance } from "../plugin-manager/PluginManager.types";
 import { composePlugins } from "../plugin-manager/PluginManager.utils";
 
 import grayMatter from "gray-matter";
@@ -85,10 +85,13 @@ function wikifyLinks(html: string, root: RegistryNode, contentDir: string, curre
  * Plugin: processes markdown files, converting them to HTML and applying a Handlebars layout if present.
  * Adds Mermaid diagram support: code blocks with ```mermaid are rendered to SVG and replaced with <img> tags.
  */
-export const processMarkdown = (
-  contentDir: string,
-  outputDir: string
-): GardenerPlugin<RegistryNode, RegistryNode> =>
+type ProcessMarkdownConfig = {
+  contentDir: string; // directory where content is located
+  outputDir: string; // destination directory for processed content
+};
+export const processMarkdown: GardenerPluginHoc<RegistryNode, RegistryNode, ProcessMarkdownConfig> = (
+  {contentDir, outputDir}
+) =>
   async (root) => {
     await visitNode(root, async (node) => {
       const rel = path.relative(contentDir, node.file.path);
@@ -202,10 +205,13 @@ Chrome/Chromium not found. To fix this:
  * If the HTML file contains frontmatter, it is parsed and the file is treated as a Handlebars template with frontmatter variables.
  * Also applies the nearest _layout.html as a Handlebars template, just like markdown.
  */
-export const processHtml = (
-  contentDir: string,
-  outputDir: string
-): GardenerPlugin<RegistryNode, RegistryNode> =>
+type ProcessHtmlConfig = {
+  contentDir: string; // directory where content is located
+  outputDir: string; // destination directory for processed content
+};
+export const processHtml: GardenerPluginHoc<RegistryNode, RegistryNode, ProcessHtmlConfig> = (
+  {contentDir,outputDir}
+) =>
   async (root) => {
     await visitNode(root, async (node) => {
       const rel = path.relative(contentDir, node.file.path);
@@ -239,10 +245,13 @@ export const processHtml = (
 /**
  * Plugin: creates directories in the output tree.
  */
-export const processDirectories = (
-  contentDir: string,
-  outputDir: string
-): GardenerPlugin<RegistryNode, RegistryNode> =>
+type ProcessDirectoriesConfig = {
+  contentDir: string; // directory where content is located
+  outputDir: string; // destination directory for processed content
+};
+export const processDirectories: GardenerPluginHoc<RegistryNode, RegistryNode, ProcessDirectoriesConfig> = (
+  {contentDir, outputDir}
+): GardenerPluginInstance<RegistryNode, RegistryNode> =>
   async (root) => {
     await visitNode(root, async (node) => {
       const rel = path.relative(contentDir, node.file.path);
@@ -257,12 +266,15 @@ export const processDirectories = (
 /**
  * Default pipeline for content: process directories, markdown, and HTML files.
  */
-export const defaultContentPlugins = (
-  contentDir: string,
-  outputDir: string
-): GardenerPlugin<RegistryNode, RegistryNode> =>
+type DefaultContentPluginConfig = {
+  contentDir: string; // directory where content is located
+  outputDir: string; // destination directory for processed content
+};
+export const defaultContentPlugins: GardenerPluginHoc<RegistryNode, RegistryNode, DefaultContentPluginConfig> = (
+  {contentDir,outputDir}
+): GardenerPluginInstance<RegistryNode, RegistryNode> =>
   composePlugins(
-    processDirectories(contentDir, outputDir),
-    processMarkdown(contentDir, outputDir),
-    processHtml(contentDir, outputDir)
+    processDirectories({contentDir, outputDir}),
+    processMarkdown({contentDir, outputDir}),
+    processHtml({contentDir, outputDir})
   );

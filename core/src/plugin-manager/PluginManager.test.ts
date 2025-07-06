@@ -37,7 +37,7 @@ describe('AssetManager', () => {
     await initializer.initializeRegistry();
     const registry = initializer.getRegistry();
 
-    const manager = new GardenerPluginManager(defaultAssetPlugins(assetsDir, destDir));
+    const manager = new GardenerPluginManager(defaultAssetPlugins({assetsDir, destDir}));
     const tree = await manager.process(registry.assets) as AssetNode;
 
     // check returned tree: root node destPath
@@ -63,7 +63,7 @@ describe('AssetManager', () => {
     await initializer.initializeRegistry();
     const registry = initializer.getRegistry();
 
-    const manager = new GardenerPluginManager(defaultAssetPlugins(assetsDir, destDir));
+    const manager = new GardenerPluginManager(defaultAssetPlugins({assetsDir, destDir}));
     const tree = await manager.process(registry.assets) as AssetNode;
 
     // traverse returned AssetNode tree to collect destPaths

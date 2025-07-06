@@ -1,10 +1,10 @@
 import { RegistryNode } from "../registry/registry.types";
-import type { GardenerPlugin } from "./PluginManager.types";
+import type { GardenerPluginHoc, GardenerPluginInstance } from "./PluginManager.types";
 
 export class GardenerPluginManager {
-    plugins: GardenerPlugin[];
+    plugins: GardenerPluginInstance[];
     
-    constructor(...plugins: GardenerPlugin[]) {
+    constructor(...plugins: GardenerPluginInstance[]) {
         this.plugins = plugins;
     }
 

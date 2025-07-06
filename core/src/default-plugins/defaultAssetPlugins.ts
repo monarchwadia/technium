@@ -1,15 +1,18 @@
 import path from "path";
 import { RegistryNode } from "../registry/registry.types";
 import { mapNode, visitNode } from "../registry/registryUtils";
-import { AssetNode, type GardenerPlugin } from "../plugin-manager/PluginManager.types";
+import { AssetNode, type GardenerPluginHoc } from "../plugin-manager/PluginManager.types";
 import fs from "fs";
 import { composePlugins } from "../plugin-manager/PluginManager.utils";
 
 /**
  * Static plugin: maps a RegistryNode tree to AssetNode tree using provided dirs.
  */
-export const mapToAssetNode =
-  (assetsDir: string, destDir: string) =>
+type MapToAssetNodeConfig = {
+  assetsDir: string; // directory where assets are located
+  destDir: string; // destination directory for assets
+}
+export const mapToAssetNode: GardenerPluginHoc<RegistryNode, AssetNode, MapToAssetNodeConfig> = ({assetsDir, destDir}) =>
   async (root: RegistryNode): Promise<AssetNode> => {
     return mapNode<AssetNode>(root, (node: RegistryNode) => {
       const rel = path.relative(assetsDir, node.file.path);
@@ -21,7 +24,7 @@ export const mapToAssetNode =
 /**
  * Static plugin: copies files/dirs according to AssetNode.destPath.
  */
-export const copyAssets = async (tree: AssetNode): Promise<AssetNode> => {
+export const copyAssets: GardenerPluginHoc<AssetNode, AssetNode, void> = () => async (tree: AssetNode): Promise<AssetNode> => {
   await visitNode(tree, (node: RegistryNode) => {
     const assetNode = node as AssetNode;
     const target = assetNode.asset.destPath;
@@ -35,9 +38,7 @@ export const copyAssets = async (tree: AssetNode): Promise<AssetNode> => {
   return tree;
 };
 
-export const deleteFolder = (
-  dir: string
-): GardenerPlugin<RegistryNode, RegistryNode> => {
+export const deleteFolder: GardenerPluginHoc<RegistryNode, RegistryNode, { dir: string }> = ({dir}) => {
   return async (root: RegistryNode): Promise<RegistryNode> => {
     // check if folder is outside of project root
     if (!path.isAbsolute(dir)) {
@@ -54,9 +55,15 @@ export const deleteFolder = (
   };
 };
 
-export const defaultAssetPlugins = (
-  assetsDir: string,
-  destDir: string
-): GardenerPlugin<RegistryNode, AssetNode> => {
-  return composePlugins(mapToAssetNode(assetsDir, destDir), copyAssets);
-};
+type DefaultAssetPluginConfig = {
+  assetsDir: string; // directory where assets are located
+  destDir: string; // destination directory for assets
+}
+
+export const defaultAssetPlugins: GardenerPluginHoc<RegistryNode, AssetNode, DefaultAssetPluginConfig> =
+  ({ assetsDir, destDir }) => {
+    return composePlugins(
+      mapToAssetNode({ assetsDir, destDir }),
+      copyAssets()
+  );
+}

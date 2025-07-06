@@ -9,4 +9,6 @@ export interface AssetNode extends RegistryNode {
 /**
  * Unary async function type.
  */
-export type GardenerPlugin<I = any, O = any> = (input: I) => Promise<O>;
+export type GardenerPluginHoc<I = any, O = any, C = any> = (config: C) => GardenerPluginInstance<I, O>;
+
+export type GardenerPluginInstance<I = any, O = any> = (input: I) => Promise<O>;
